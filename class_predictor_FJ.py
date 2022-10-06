@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import torch as to
 
 # To install packages, activate conda command by typing in terminal:
 # > . /Users/xjacfr/opt/anaconda3/bin/activate && conda activate /Users/xjacfr/opt/anaconda3;
@@ -42,12 +41,12 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle
 # 3. Calculate mean and std of scores from cross_val_predict and evaluate the parameters
 # 4. When satisfied with parameters, use estimator.fit on the whole training set X
 # 5. Evaluate results with cross_val_predict or score and also % misclassification
-# 6. Check the first 50 entries of evaluation set and compare to other estimators
+# 6. Check the first 50 entries of evaluation set and compare to other estimators.
 
 # 19/4
-# Started by importing PyTorch and Pandas and set up a new working environment with some problems. Made the first code,
-# just reading the input files with pandas and concatenating them together to one dataframe. Changed the name of the
-# columns to "label" and the string integers "1" to "52". 4 h of work.
+# Started by importing PyTorch and Pandas and set up a new working environment with some problems. (update: Will not use PyTorch just yet) 
+# Made the first code, just reading the input files with pandas and concatenating them together to one dataframe. Changed the name of the
+# columns to "label" and the string integers "1" to "52".
 
 # 22/4
 # Decided for an outline, to try different algorithms for the classification problem.
@@ -56,12 +55,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle
 # 3. Random Forest (ensemble)
 # 4. Deep learning (neural network)
 # Maybe combine the above with or without some kind of feature selection also.
-#
-# I'm realizing that this course has already taken more than 40 h for me and there is no way that I will spend only 40
-# more h on the course in total. It should really give more points... But it's fun!
-#
-# Info search on PyTorch and Naive Bayes: Found scikit.learn and naive bayes Gaussian that seems right to use. (1 h)
-# Installed scikit-learn and looked through documentation to naive bayes. (30 min)
 
 print("\n", "-----Naive Bayes, test set 20%, 5 x 5 cv -----", "\n")
 
@@ -91,15 +84,15 @@ eval_pred = gnb.predict(df_eval) # Predicts 0 or 1 for the evaluation set
 print("First 50 entries of eval_pred: \n", eval_pred[0:50])
 
 # Results: Not very good with around 25% missclassification. Tried different test set sizes but same result.
-# Look for a better method! (30 min)
+# Look for a better method!
 
-# 23/4 (13 h)
+# 23/4
 # Read a lot on scikit-learn page about different methods, mostly about KNN and logistic regression and their related
 # functions with parameters. Maybe kernel method together with logistic regression. Thinking about doing some regularization of the data before using logistic regression or KNN.
 # A function sparsity() converts the coeff matrix to a sparse matrix, seems interesting. Scikit-learn page suggests using
 # liblinear solving method for logistic regression if dataset is small, so I will try doing that. There is a logistic
 # regression function with built-in cross validation, I will try it below: (3 h) Liblinear didn't converge, I changed
-# solver to sag instead. Then it didn't converge at all! Changed back and used built-in cv with increased max_iter. (23/4)
+# solver to sag instead. Then it didn't converge at all! Changed back to default and used built-in cv with increased max_iter. (23/4)
 
 print("\n", "----- Logistic regression, 5 x 5 CV -----", "\n")
 
@@ -129,7 +122,7 @@ print("The mean score after cv of testing set is", m, "with std", sd, ".")
 eval_pred = clf.predict(df_eval) # Predicts 0 or 1 for the evaluation set
 print("First 50 entries of eval_pred: \n", eval_pred[0:50])
 
-# Searched for ways to save predictions in txt filea from dataframes, and made a file from the logistic
+# Searched for ways to save predictions in txt files from dataframes, and made a file from the logistic
 # regression method.
 
 eval_pred_temp = pd.DataFrame(data=eval_pred)
@@ -137,7 +130,7 @@ eval_pred_temp.to_csv('eval_pred1.txt', header=None, index=None, sep=' ', mode='
 
 # The logistic regression with CV always gives 300 misclassifications, so I guess 300 of the samples are different
 # in some way, maybe making the data non-parametric.
-# Will now try KNN. (1 h)
+# Will now try KNN.
 
 print("\n", "----- KNN, brute force method, n = 4, weights = distance -----", "\n")
 
@@ -175,4 +168,4 @@ print("First 50 entries of eval_pred: \n", eval_pred[0:50])
 
 #####----- Deposit 1 of the project -----#####
 
-# Use the logistic regression prediction? (23/4)
+# Use the logistic regression prediction?
